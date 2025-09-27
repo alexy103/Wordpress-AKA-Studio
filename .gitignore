@@ -1,0 +1,18 @@
+# Ignore tout le dossier wordpress
+wordpress/*
+
+# Ré-autoriser wp-content
+!wordpress/wp-content/
+
+# Re-ignore tout dans wp-content
+wordpress/wp-content/*
+
+# Ré-autoriser le dossier themes
+!wordpress/wp-content/themes/
+
+# Re-ignore tous les thèmes
+wordpress/wp-content/themes/*
+
+# Ré-autoriser UNIQUEMENT ton thème et son contenu
+!wordpress/wp-content/themes/AKA-Studio/
+!wordpress/wp-content/themes/AKA-Studio/**

@@ -1,0 +1,45 @@
+# Le fichier le plus simple pour WordPress + MySQL
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      # Mots de passe DE DEMO (tu pourras les changer après)
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - db_data:/var/lib/mysql # où MySQL stocke ses données
+
+  wordpress:
+    image: wordpress:latest
+    depends_on:
+      - db
+    restart: unless-stopped
+    ports:
+      - "8080:80" # ouvre http://localhost:8080
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - ./wordpress:/var/www/html
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    depends_on:
+      - db
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_USER: wordpress
+      PMA_PASSWORD: wordpress
+      # PMA_ABSOLUTE_URI: http://localhost:8081/  # optionnel
+    ports:
+      - "8081:80"    
+
+volumes:
+  db_data:
+  wp_data:
