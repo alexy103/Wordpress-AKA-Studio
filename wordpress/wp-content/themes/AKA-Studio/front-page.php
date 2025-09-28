@@ -30,287 +30,107 @@
     <section class="work slide">
         <div class="presentation">
             <h2 class="slideTitle">WORK<span class="red">.</span></h2>
-            <ul class="workMenu submenu">
-                <li class="workMenu__link submenu__active">Showreel</li>
-                <li class="workMenu__link">Sport</li>
-                <li class="workMenu__link">Corporate</li>
-                <li class="workMenu__link">Fiction</li>
-            </ul>
+
+            <?php
+            // Récupérer les catégories de la taxonomie 'projet_cat' qui ont au moins 1 post
+            $available_cats = get_terms([
+                'taxonomy'   => 'projet_cat',
+                'hide_empty' => true,
+                'orderby'    => 'name', // change en 'id' si tu veux l'ordre de création
+                'order'      => 'ASC',
+            ]);
+            ?>
+
+            <?php if (!is_wp_error($available_cats) && !empty($available_cats)): ?>
+                <ul class="workMenu submenu">
+                    <?php $first = true; ?>
+                    <?php foreach ($available_cats as $term): ?>
+                        <li class="workMenu__link <?= $first ? 'submenu__active' : '' ?>">
+                            <?= esc_html($term->name); ?>
+                        </li>
+                        <?php $first = false; ?>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
         </div>
 
-        <div class="projects projects--showreel">
-            <figure class="project">
-                <figcaption class="project__text">
-                    <p class="title">BNTH - League 1</p>
-                    <p class="number">1</p>
-                </figcaption>
-                <div class="project__image">
-                    <img
-                        src="images/BNTH.png"
-                        alt=""
-                        class="thumbnail"
-                        data-title="Égérie Fitness Park Rémy"
-                        data-src=""
-                        data-description="Lorem ipsum dolor sit amet..."
-                        data-client="Rémy Dasilva Novais"
-                        data-fonction="réalisation, captation, montage, étalonnage, motion design"
-                        data-date="02 juillet 2024" />
-                </div>
-            </figure>
-            <figure class="project">
-                <figcaption class="project__text">
-                    <p class="title">BNTH - League 1</p>
-                    <p class="number">1</p>
-                </figcaption>
-                <div class="project__image">
-                    <img
-                        src="images/BNTH.png"
-                        alt=""
-                        class="thumbnail"
-                        data-title="Égérie Fitness Park Rémy"
-                        data-src=""
-                        data-description="Lorem ipsum dolor sit amet..."
-                        data-client="Rémy Dasilva Novais"
-                        data-fonction="réalisation, captation, montage, étalonnage, motion design"
-                        data-date="02 juillet 2024" />
-                </div>
-            </figure>
-            <figure class="project">
-                <figcaption class="project__text">
-                    <p class="title">BNTH - League 1</p>
-                    <p class="number">1</p>
-                </figcaption>
-                <div class="project__image">
-                    <img
-                        src="images/BNTH.png"
-                        alt=""
-                        class="thumbnail"
-                        data-title="Égérie Fitness Park Rémy"
-                        data-src=""
-                        data-description="Lorem ipsum dolor sit amet..."
-                        data-client="Rémy Dasilva Novais"
-                        data-fonction="réalisation, captation, montage, étalonnage, motion design"
-                        data-date="02 juillet 2024" />
-                </div>
-            </figure>
-            <figure class="project">
-                <figcaption class="project__text">
-                    <p class="title">BNTH - League 1</p>
-                    <p class="number">1</p>
-                </figcaption>
-                <div class="project__image">
-                    <img
-                        src="images/BNTH.png"
-                        alt=""
-                        class="thumbnail"
-                        data-title="Égérie Fitness Park Rémy"
-                        data-src=""
-                        data-description="Lorem ipsum dolor sit amet..."
-                        data-client="Rémy Dasilva Novais"
-                        data-fonction="réalisation, captation, montage, étalonnage, motion design"
-                        data-date="02 juillet 2024" />
-                </div>
-            </figure>
-            <figure class="project">
-                <figcaption class="project__text">
-                    <p class="title">BNTH - League 1</p>
-                    <p class="number">1</p>
-                </figcaption>
-                <div class="project__image">
-                    <img
-                        src="images/BNTH.png"
-                        alt=""
-                        class="thumbnail"
-                        data-title="Égérie Fitness Park Rémy"
-                        data-src=""
-                        data-description="Lorem ipsum dolor sit amet..."
-                        data-client="Rémy Dasilva Novais"
-                        data-fonction="réalisation, captation, montage, étalonnage, motion design"
-                        data-date="02 juillet 2024" />
-                </div>
-            </figure>
-            <figure class="project">
-                <figcaption class="project__text">
-                    <p class="title">BNTH - League 1</p>
-                    <p class="number">1</p>
-                </figcaption>
-                <div class="project__image">
-                    <img
-                        src="images/BNTH.png"
-                        alt=""
-                        class="thumbnail"
-                        data-title="Égérie Fitness Park Rémy"
-                        data-src=""
-                        data-description="Lorem ipsum dolor sit amet..."
-                        data-client="Rémy Dasilva Novais"
-                        data-fonction="réalisation, captation, montage, étalonnage, motion design"
-                        data-date="02 juillet 2024" />
-                </div>
-            </figure>
-            <figure class="project">
-                <figcaption class="project__text">
-                    <p class="title">BNTH - League 1</p>
-                    <p class="number">1</p>
-                </figcaption>
-                <div class="project__image">
-                    <img
-                        src="images/BNTH.png"
-                        alt=""
-                        class="thumbnail"
-                        data-title="Égérie Fitness Park Rémy"
-                        data-src=""
-                        data-description="Lorem ipsum dolor sit amet..."
-                        data-client="Rémy Dasilva Novais"
-                        data-fonction="réalisation, captation, montage, étalonnage, motion design"
-                        data-date="02 juillet 2024" />
-                </div>
-            </figure>
-            <figure class="project">
-                <figcaption class="project__text">
-                    <p class="title">BNTH - League 1</p>
-                    <p class="number">1</p>
-                </figcaption>
-                <div class="project__image">
-                    <img
-                        src="images/BNTH.png"
-                        alt=""
-                        class="thumbnail"
-                        data-title="Égérie Fitness Park Rémy"
-                        data-src=""
-                        data-description="Lorem ipsum dolor sit amet..."
-                        data-client="Rémy Dasilva Novais"
-                        data-fonction="réalisation, captation, montage, étalonnage, motion design"
-                        data-date="02 juillet 2024" />
-                </div>
-            </figure>
-            <figure class="project">
-                <figcaption class="project__text">
-                    <p class="title">BNTH - League 1</p>
-                    <p class="number">1</p>
-                </figcaption>
-                <div class="project__image">
-                    <img
-                        src="images/BNTH.png"
-                        alt=""
-                        class="thumbnail"
-                        data-title="Égérie Fitness Park Rémy"
-                        data-src=""
-                        data-description="Lorem ipsum dolor sit amet..."
-                        data-client="Rémy Dasilva Novais"
-                        data-fonction="réalisation, captation, montage, étalonnage, motion design"
-                        data-date="02 juillet 2024" />
-                </div>
-            </figure>
-        </div>
-        <div class="projects projects--sport hidden">
-            <figure class="project">
-                <figcaption class="project__text">
-                    <p class="title">BNTH - League 1</p>
-                    <p class="number">1</p>
-                </figcaption>
-                <div class="project__image">
-                    <img
-                        src="images/BNTH.png"
-                        alt=""
-                        class="thumbnail"
-                        data-title="Égérie Fitness Park Rémy"
-                        data-src=""
-                        data-description="Lorem ipsum dolor sit amet..."
-                        data-client="Rémy Dasilva Novais"
-                        data-fonction="réalisation, captation, montage, étalonnage, motion design"
-                        data-date="02 juillet 2024" />
-                </div>
-            </figure>
+        <?php if (!is_wp_error($available_cats) && !empty($available_cats)): ?>
+            <?php $first = true; ?>
+            <?php foreach ($available_cats as $term): ?>
 
-            <figure class="project">
-                <figcaption class="project__text">
-                    <p class="title">713 x FFF - Backstage</p>
-                    <p class="number">2</p>
-                </figcaption>
-                <div class="project__image">
-                    <img
-                        src="images/mbappe.png"
-                        alt=""
-                        class="thumbnail"
-                        data-title="713 x FFF - Backstage"
-                        data-src=""
-                        data-description="Lorem..."
-                        data-client="Kylian Mbappé"
-                        data-fonction="réalisation"
-                        data-date="02 mars 2025" />
-                </div>
-            </figure>
+                <?php
+                $q = new WP_Query([
+                    'post_type'      => 'projet',
+                    'posts_per_page' => -1,
+                    'tax_query'      => [[
+                        'taxonomy' => 'projet_cat',
+                        'field'    => 'term_id',
+                        'terms'    => $term->term_id,
+                    ]],
+                ]);
+                $index = 1;
+                ?>
 
-            <figure class="project">
-                <figcaption class="project__text">
-                    <p class="title">713 x FFF - Backstage</p>
-                    <p class="number">3</p>
-                </figcaption>
-                <div class="project__image">
-                    <img src="images/BNTH.png" alt="" class="" />
-                </div>
-            </figure>
+                <?php if ($q->have_posts()): ?>
+                    <div class="projects projects--<?= esc_attr($term->slug); ?> <?= $first ? '' : 'hidden'; ?>">
+                        <?php while ($q->have_posts()): $q->the_post(); ?>
 
-            <figure class="project">
-                <figcaption class="project__text">
-                    <p class="title">713 x FFF - Backstage</p>
-                    <p class="number">3</p>
-                </figcaption>
-                <div class="project__image">
-                    <img src="images/BNTH.png" alt="" class="" />
-                </div>
-            </figure>
-        </div>
-        <div class="projects projects--corporate hidden">
-            <figure class="project">
-                <figcaption class="project__text">
-                    <p class="title">BNTH - League 1</p>
-                    <p class="number">1</p>
-                </figcaption>
-                <div class="project__image">
-                    <img src="images/BNTH.png" alt="" class="" />
-                </div>
-            </figure>
-            <figure class="project">
-                <figcaption class="project__text">
-                    <p class="title">713 x FFF - Backstage</p>
-                    <p class="number">2</p>
-                </figcaption>
-                <div class="project__image">
-                    <img src="images/mbappe.png" alt="" class="" />
-                </div>
-            </figure>
-        </div>
-        <div class="projects projects--fiction hidden">
-            <figure class="project">
-                <figcaption class="project__text">
-                    <p class="title">BNTH - League 1</p>
-                    <p class="number">1</p>
-                </figcaption>
-                <div class="project__image">
-                    <img src="images/BNTH.png" alt="" class="" />
-                </div>
-            </figure>
-            <figure class="project">
-                <figcaption class="project__text">
-                    <p class="title">713 x FFF - Backstage</p>
-                    <p class="number">2</p>
-                </figcaption>
-                <div class="project__image">
-                    <img src="images/mbappe.png" alt="" class="" />
-                </div>
-            </figure>
-        </div>
-        <h3 class="category category--showreel">
-            <span>Showreel</span>
-        </h3>
-        <h3 class="category category--sport hidden">
-            <span>Sport</span>
-        </h3>
-        <h3 class="category category--corporate hidden">
-            <span>Corporate</span>
-        </h3>
-        <h3 class="category category--fiction hidden"><span>Fiction</span></h3>
+                            <?php
+                            // Champs natifs
+                            $title   = get_the_title();
+                            $content = get_the_content();
+
+                            // Champs ACF
+                            $img_id   = get_field('image');   // return_format = 'id'
+                            $link     = get_field('lien');
+                            $client   = get_field('client');
+                            $date     = get_field('date');    // date_picker
+                            $fonction = get_field('fonction');
+                            ?>
+                            <figure class="project">
+                                <figcaption class="project__text">
+                                    <p class="title"><?= esc_html($title); ?></p>
+                                    <p class="number"><?= $index++ ?></p>
+                                </figcaption>
+                                <div class="project__image">
+                                    <?php if ($img_id): ?>
+                                        <?= wp_get_attachment_image(
+                                            $img_id,
+                                            'large',
+                                            false,
+                                            [
+                                                'class'            => 'thumbnail',
+                                                'alt'              => esc_attr($title),
+                                                'data-title'       => esc_attr($title),
+                                                'data-src'         => esc_url($link),
+                                                'data-description' => esc_attr(wp_strip_all_tags($content)),
+                                                'data-client'      => esc_attr($client),
+                                                'data-fonction'    => esc_attr($fonction),
+                                                'data-date'        => esc_attr($date),
+                                            ]
+                                        ); ?>
+                                    <?php endif; ?>
+                                </div>
+                            </figure>
+
+                        <?php endwhile; ?>
+                    </div>
+
+                    <h3 class="category category--<?= esc_attr($term->slug); ?> <?= $first ? '' : 'hidden'; ?>">
+                        <span><?= esc_html($term->name); ?></span>
+                    </h3>
+
+                    <?php
+                    wp_reset_postdata();
+                    $first = false; // on ne bascule qu’après avoir effectivement rendu une section
+                    ?>
+                <?php endif; ?>
+
+            <?php endforeach; ?>
+        <?php endif; ?>
+
+
+
         <img
             src="<?= wp_get_attachment_image_url(get_field('work')['contact_kanji'], 'full') ?>"
             alt="Cream Kanji"
