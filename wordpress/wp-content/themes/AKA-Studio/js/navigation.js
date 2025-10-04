@@ -153,9 +153,11 @@ desktopNavbarLinks.forEach((link, index) => {
     switch (displayedSlideName) {
       case "home":
         let homeAkas = document.querySelectorAll(".home .aka--wrapper");
-        handleAkas(homeAkas, "left");
-        updateSlide(nextSlideName);
-
+        if(nextSlideName === "work") {
+          handleHomeAkas(nextSlideName, homeAkaRed, homeAkaCream, "right", "left");
+        } else if (nextSlideName === "contact") {
+          handleHomeAkas(nextSlideName, homeAkaCream, homeAkaRed, "left", "right");
+        }
         break;
       case "work":
         updateSlide(nextSlideName);
@@ -194,9 +196,9 @@ desktopNavbarLinks.forEach((link, index) => {
     updateNavbarLink(nextSlideName);
 
     // On cache les akas de HOME
-    document.querySelectorAll(".home .aka--wrapper").forEach((aka) => {
-      aka.classList.add("hidden");
-    });
+    // document.querySelectorAll(".home .aka--wrapper").forEach((aka) => {
+    //   aka.classList.add("hidden");
+    // });
   });
 });
 

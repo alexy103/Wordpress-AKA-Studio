@@ -147,27 +147,10 @@
                 alt="AKA STUDIO Main Logo"
                 class="content__img" />
             <div>
-                <h3 class="content__title">Titre présentation</h3>
+                <h3 class="content__title"><?= get_field('about')['aka-title'] ?></h3>
                 <div class="content__text">
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ex
-                        mi, posuere in velit nec, auctor sagittis purus. Praesent vitae
-                        mattis diam, eget sodales dui. Mauris efficitur quam vitae
-                        malesuada rutrum. In orci elit, consequat non malesuada sit
-                        amet, iaculis eget enim. Integer suscipit sagittis augue sit
-                        amet placerat. Suspendisse mattis pellentesque augue eget
-                        pharetra. Integer vel vulputate tortor, in blandit felis.
-                        Integer vel quam eu nisi ultricies interdum. Suspendisse
-                        ultrices nibh sed lacus ornare, id efficitur orci aliquet. Lorem
-                        ipsum dolsor sit amet, consectetur adipiscing elit. Cras ex mi,
-                        posuere in velit nec, auctor sagittis purus. Praesent vitae
-                        mattis diam, eget sodales dui. Mauris efficitur quam vitae
-                        malesuada rutrum. In orci elit, consequat non malesuada sit
-                        amet, iaculis eget enim. Integer suscipit sagittis augue sit
-                        amet placerat. Suspendisse mattis pellentesque augue eget
-                        pharetra. Integer vel vulputate tortor, in blandit felis.
-                        Integer vel quam eu nisi ultricies interdum. Suspendisse
-                        ultrices nibh sed lacus ornare, id efficitur orci aliquet.
+                        <?= get_field('about')['aka-text'] ?>
                     </p>
                 </div>
             </div>
@@ -177,316 +160,240 @@
                 <!-- TODO: caché en mobile et visible en desktop -->
                 <img src="" alt="" class="mainOpinion__img" />
                 <figcaption class="mainOpinion__infos">
-                    <h4 class="mainOpinion__title">TEAM VITALITY</h4>
-                    <p class="mainOpinion__text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ex
-                        mi, posuere in velit nec, auctor sagittis purus. Praesent vitae
-                        mattis diam, eget sodales dui. Mauris efficitur quam vitae
-                        malesuada rutrum. In orci elit.
-                    </p>
+                    <h4 class="mainOpinion__title"></h4>
+                    <p class="mainOpinion__text"></p>
                 </figcaption>
             </figure>
             <div class="content__wrapper">
                 <h3 class="content__title">
-                    Ils nous font confiance <span class="red">!</span>
+                    <?php $avis_title = get_field('about')['avis-title']; ?>
+                    <?php if (str_contains(get_field('about')['avis-title'], "!")): ?>
+                        <?= str_replace('!', '<span class="red">!</span>', $avis_title); ?>
+                    <?php else: ?>
+                        <?= $avis_title; ?>
+                    <?php endif; ?>
                 </h3>
 
                 <div class="opinions">
-                    <figure class="opinion">
-                        <figcaption class="opinion__infos">
-                            <p class="opinion__text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Cras ex mi, posuere in velit nec, auctor sagittis purus.
-                                Praesent vitae mattis diam, eget sodales dui. Mauris
-                                efficitur quam vitae malesuada rutrum. In orci elit.
-                            </p>
-                        </figcaption>
-                        <div class="opinionSlider slider">
-                            <i class="fa-solid fa-chevron-left"></i>
-                            <img src="images/forty.png" alt="" />
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </div>
-                        <h4 class="opinion__title">TEAM VITALITY</h4>
-                    </figure>
-                    <figure class="opinion hidden">
-                        <figcaption class="opinion__infos">
-                            <p class="opinion__text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Cras ex mi, posuere in velit nec, auctor sagittis purus.
-                                Praesent vitae mattis diam, eget sodales dui. Mauris
-                                efficitur quam vitae malesuada rutrum. In orci elit.
-                            </p>
-                        </figcaption>
-                        <div class="opinionSlider slider">
-                            <i class="fa-solid fa-chevron-left"></i>
-                            <img src="images/forty.png" alt="" />
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </div>
-                        <h4 class="opinion__title">TEAM</h4>
-                    </figure>
+                    <?php
+                    $q = new WP_Query([
+                        'post_type'      => 'avis',
+                        'post_status'    => 'publish',
+                        'posts_per_page' => -1,
+                        'orderby'        => 'date',
+                        'order'          => 'DESC',
+                    ]);
+                    $i = 0;
+
+                    if ($q->have_posts()):
+                        while ($q->have_posts()): $q->the_post();
+                            // Classes actives pour le premier item
+                            $active_class = ($i != 0) ? ' hidden' : ''; ?>
+                            <figure class="opinion<?= $active_class; ?>">
+                                <figcaption class="opinion__infos">
+                                    <p class="opinion__text">
+                                        <?= wp_kses_post(get_the_content()); ?>
+                                    </p>
+                                </figcaption>
+                                <div class="opinionSlider slider">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                    <img src="images/forty.png" alt="" />
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </div>
+                                <h4 class="opinion__title"><?= esc_html(get_the_title()); ?></h4>
+                            </figure>
+                        <?php
+                            $i++;
+                        endwhile;
+                        wp_reset_postdata(); ?>
+                    <?php endif; ?>
                 </div>
 
                 <div class="desktopOpinions">
-                    <figure class="opinion active activeIn">
-                        <img src="images/forty.png" alt="" />
-                        <figcaption class="opinion__infos">
-                            <h4 class="opinion__title">TEAM VITALITY</h4>
-                            <p class="opinion__text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Cras ex mi, posuere in velit nec, auctor sagittis purus.
-                                Praesent vitae mattis diam, eget sodales dui. Mauris
-                                efficitur quam vitae malesuada rutrum. In orci elit.
-                            </p>
-                        </figcaption>
-                    </figure>
-                    <figure class="opinion">
-                        <img src="images/Carré_rouge.svg.png" alt="" />
-                        <figcaption class="opinion__infos">
-                            <h4 class="opinion__title">ROUGE</h4>
-                            <p class="opinion__text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Cras ex mi, posuere in velit nec, auctor sagittis purus.
-                                Praesent vitae mattis diam, eget sodales dui. Mauris
-                                efficitur quam vitae malesuada rutrum. In orci elit.
-                            </p>
-                        </figcaption>
-                    </figure>
-                    <figure class="opinion">
-                        <img src="images/carre-blanc-vide-sac-de-sport.jpg" alt="" />
-                        <figcaption class="opinion__infos">
-                            <h4 class="opinion__title">BLANC</h4>
-                            <p class="opinion__text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Cras ex mi, posuere in velit nec, auctor sagittis purus.
-                                Praesent vitae mattis diam, eget sodales dui. Mauris
-                                efficitur quam vitae malesuada rutrum. In orci elit.
-                            </p>
-                        </figcaption>
-                    </figure>
-                    <figure class="opinion">
-                        <img
-                            src="images/smiley-carre-vert-simple-face-magnetique.jpg" />
-                        <figcaption class="opinion__infos">
-                            <h4 class="opinion__title">VERT</h4>
-                            <p class="opinion__text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Cras ex mi, posuere in velit nec, auctor sagittis purus.
-                                Praesent vitae mattis diam, eget sodales dui. Mauris
-                                efficitur quam vitae malesuada rutrum. In orci elit.
-                            </p>
-                        </figcaption>
-                    </figure>
+                    <?php
+                    $q = new WP_Query([
+                        'post_type'      => 'avis',
+                        'post_status'    => 'publish',
+                        'posts_per_page' => -1,
+                        'orderby'        => 'date',
+                        'order'          => 'DESC',
+                    ]);
+                    $i = 0;
+
+                    if ($q->have_posts()):
+                        while ($q->have_posts()): $q->the_post();
+                            // Classes actives pour le premier item
+                            $active_class = ($i === 0) ? ' active activeIn' : ''; ?>
+                            <figure class="opinion<?= $active_class; ?>">
+                                <img src="<?= wp_get_attachment_image_url(get_field('image'), 'full') ?>"
+                                    alt="">
+                                <figcaption class="opinion__infos">
+                                    <h4 class="opinion__title"><?= esc_html(get_the_title()); ?></h4>
+                                    <p class="opinion__text"><?= wp_kses_post(get_the_content()); ?></p>
+                                </figcaption>
+                            </figure>
+                        <?php
+                            $i++;
+                        endwhile;
+                        wp_reset_postdata(); ?>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
         <div class="content hidden content--friends">
             <h3 class="content__title">
-                Indépendant mais pas solitaire <span class="red">!</span>
+                <?php $friends_title = get_field('about')['friends-title']; ?>
+                <?php if (str_contains(get_field('about')['friends-title'], "!")): ?>
+                    <?= str_replace('!', '<span class="red">!</span>', $friends_title); ?>
+                <?php else: ?>
+                    <?= $friends_title; ?>
+                <?php endif; ?>
             </h3>
             <p class="content__text">
-                J'ai eu l'occasion au fil des années de travailler avec une
-                multitude de prestataires et d'artistes talentueux fournissant des
-                services sans fautes. Laisse-moi te les présenter brièvement.
+                <?= get_field('about')['friends-text'] ?>
             </p>
-            <div class="friendlist">
-                <figure class="friend">
-                    <div class="slider">
-                        <i class="fa-solid fa-chevron-left"></i>
-                        <img src="images/forty.png" alt="" />
-                        <i class="fa-solid fa-chevron-right"></i>
+            <?php
+            // Réutilise $terms si déjà défini plus haut, sinon on le charge avec les mêmes options
+            if (!isset($terms) || is_wp_error($terms)) {
+                $terms = get_terms([
+                    'taxonomy'   => 'friends_cat',
+                    'hide_empty' => true,
+                    'orderby'    => 'name',
+                    'order'      => 'ASC',
+                ]);
+            }
+
+            if (!is_wp_error($terms) && !empty($terms)):
+                $t_i = 0;
+                foreach ($terms as $term):
+                    // Premier .friendlist visible, suivants hidden
+                    $hidden_class = ($t_i > 0) ? ' hidden' : '';
+            ?>
+                    <div class="friendlist<?= $hidden_class; ?>">
+                        <?php
+                        $q = new WP_Query([
+                            'post_type'      => 'friends',
+                            'post_status'    => 'publish',
+                            'posts_per_page' => 3,
+                            'orderby'        => 'date',
+                            'order'          => 'DESC',
+                            'tax_query'      => [[
+                                'taxonomy' => 'friends_cat',
+                                'field'    => 'term_id',
+                                'terms'    => $term->term_id,
+                            ]],
+                        ]);
+
+                        $i = 0;
+                        if ($q->have_posts()):
+                            while ($q->have_posts()): $q->the_post();
+                                // 1er figure visible, suivants hidden
+                                $item_hidden = ($i > 0) ? ' hidden' : '';
+                                $link = get_field('link'); // ACF link (return_format: array)
+                        ?>
+                                <figure class="friend<?= $item_hidden; ?>">
+                                    <div class="slider">
+                                        <i class="fa-solid fa-chevron-left"></i>
+
+                                        <?php if (!empty($link['url'])): ?>
+                                            <a href="<?= esc_url($link['url']); ?>">
+                                                <img src="<?= wp_get_attachment_image_url(get_field('image'), 'full'); ?>" alt="">
+                                            </a>
+                                        <?php else: ?>
+                                            <img src="<?= wp_get_attachment_image_url(get_field('image'), 'full'); ?>" alt="">
+                                        <?php endif; ?>
+
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                    </div>
+                                    <figcaption class="friend__description">
+                                        <h4 class="name"><?= esc_html(get_the_title()); ?></h4>
+                                        <p class="text"><?= wp_kses_post(get_the_content()); ?></p>
+                                    </figcaption>
+                                </figure>
+                        <?php
+                                $i++;
+                            endwhile;
+                            wp_reset_postdata();
+                        endif;
+                        ?>
                     </div>
-                    <figcaption class="friend__description">
-                        <h4 class="name">1</h4>
-                        <p class="text">
-                            Lorem 40 dolor sit amet, consectetur adipiscing elit. Cras ex
-                            mi, posuere in velit nec, auctor sagittis purus.
-                        </p>
-                    </figcaption>
-                </figure>
-                <figure class="friend hidden">
-                    <div class="slider">
-                        <i class="fa-solid fa-chevron-left"></i>
-                        <img src="images/sevenonethree.png" alt="" />
-                        <i class="fa-solid fa-chevron-right"></i>
+            <?php
+                    $t_i++;
+                endforeach;
+            endif;
+            ?>
+
+
+            <?php
+            // 1) Un seul get_terms pour TOUT (listes + menu), mêmes options que le menu
+            $terms = get_terms([
+                'taxonomy'   => 'friends_cat',
+                'hide_empty' => true,   // ← CHANGÉ (avant: false)
+                'orderby'    => 'name',
+                'order'      => 'ASC',  // ← CHANGÉ (avant: DESC)
+            ]);
+
+            if (!is_wp_error($terms) && !empty($terms)):
+                $t_i = 0;
+                foreach ($terms as $term):
+                    // Premier bloc visible, suivants masqués (même logique que ton HTML)
+                    $hidden_class = ($t_i > 0) ? ' hidden' : '';
+            ?>
+                    <div class="friendlistDesktop<?= $hidden_class; ?>">
+                        <?php
+                        $q = new WP_Query([
+                            'post_type'      => 'friends',
+                            'post_status'    => 'publish',
+                            'posts_per_page' => 3,
+                            'orderby'        => 'date',
+                            'order'          => 'DESC',
+                            'tax_query'      => [[
+                                'taxonomy' => 'friends_cat',
+                                'field'    => 'term_id',
+                                'terms'    => $term->term_id,
+                            ]],
+                        ]);
+
+                        if ($q->have_posts()):
+                            while ($q->have_posts()): $q->the_post(); ?>
+                                <figure class="friend">
+                                    <a href="<?= esc_url(get_field('link')['url']); ?>">
+                                        <img src="<?= wp_get_attachment_image_url(get_field('image'), 'full') ?>" alt="">
+                                    </a>
+                                    <figcaption class="friend__description">
+                                        <h4 class="name"><?= esc_html(get_the_title()); ?></h4>
+                                        <p class="text"><?= wp_kses_post(get_the_content()); ?></p>
+                                    </figcaption>
+                                </figure>
+                        <?php
+                            endwhile;
+                            wp_reset_postdata();
+                        endif; ?>
                     </div>
-                    <figcaption class="friend__description">
-                        <h4 class="name">11</h4>
-                        <p class="text">
-                            Lorem 713 dolor sit amet, consectetur adipiscing elit. Cras ex
-                            mi, posuere in velit nec, auctor sagittis purus.
-                        </p>
-                    </figcaption>
-                </figure>
-                <figure class="friend hidden">
-                    <div class="slider">
-                        <i class="fa-solid fa-chevron-left"></i>
-                        <img src="images/skies.png" alt="" />
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </div>
-                    <figcaption class="friend__description">
-                        <h4 class="name">111</h4>
-                        <p class="text">
-                            Lorem Skies dolor sit amet, consectetur adipiscing elit. Cras
-                            ex mi, posuere in velit nec, auctor sagittis purus.
-                        </p>
-                    </figcaption>
-                </figure>
-            </div>
-            <div class="friendlist hidden">
-                <figure class="friend">
-                    <div class="slider">
-                        <i class="fa-solid fa-chevron-left"></i>
-                        <img src="images/forty.png" alt="" />
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </div>
-                    <figcaption class="friend__description">
-                        <h4 class="name">2</h4>
-                        <p class="text">
-                            Lorem 40 dolor sit amet, consectetur adipiscing elit. Cras ex
-                            mi, posuere in velit nec, auctor sagittis purus.
-                        </p>
-                    </figcaption>
-                </figure>
-                <figure class="friend hidden">
-                    <div class="slider">
-                        <i class="fa-solid fa-chevron-left"></i>
-                        <img src="images/forty.png" alt="" />
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </div>
-                    <figcaption class="friend__description">
-                        <h4 class="name">22</h4>
-                        <p class="text">
-                            Lorem 40 dolor sit amet, consectetur adipiscing elit. Cras ex
-                            mi, posuere in velit nec, auctor sagittis purus.
-                        </p>
-                    </figcaption>
-                </figure>
-            </div>
-            <div class="friendlist hidden">
-                <figure class="friend">
-                    <div class="slider">
-                        <i class="fa-solid fa-chevron-left"></i>
-                        <img src="images/forty.png" alt="" />
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </div>
-                    <figcaption class="friend__description">
-                        <h4 class="name">3</h4>
-                        <p class="text">
-                            Lorem 40 dolor sit amet, consectetur adipiscing elit. Cras ex
-                            mi, posuere in velit nec, auctor sagittis purus.
-                        </p>
-                    </figcaption>
-                </figure>
-            </div>
-            <div class="friendlistDesktop">
-                <figure class="friend">
-                    <img src="images/forty.png" alt="" />
-                    <figcaption class="friend__description">
-                        <h4 class="name">3</h4>
-                        <p class="text">
-                            Lorem 40 dolor sit amet, consectetur adipiscing elit. Cras ex
-                            mi, posuere in velit nec, auctor sagittis purus.
-                        </p>
-                    </figcaption>
-                </figure>
-                <figure class="friend">
-                    <img src="images/forty.png" alt="" />
-                    <figcaption class="friend__description">
-                        <h4 class="name">3</h4>
-                        <p class="text">
-                            Lorem 40 dolor sit amet, consectetur adipiscing elit. Cras ex
-                            mi, posuere in velit nec, auctor sagittis purus.
-                        </p>
-                    </figcaption>
-                </figure>
-                <figure class="friend">
-                    <img src="images/forty.png" alt="" />
-                    <figcaption class="friend__description">
-                        <h4 class="name">3</h4>
-                        <p class="text">
-                            Lorem 40 dolor sit amet, consectetur adipiscing elit. Cras ex
-                            mi, posuere in velit nec, auctor sagittis purus.
-                        </p>
-                    </figcaption>
-                </figure>
-            </div>
-            <div class="friendlistDesktop hidden">
-                <figure class="friend">
-                    <img src="images/forty.png" alt="" />
-                    <figcaption class="friend__description">
-                        <h4 class="name">2</h4>
-                        <p class="text">
-                            Lorem 40 dolor sit amet, consectetur adipiscing elit. Cras ex
-                            mi, posuere in velit nec, auctor sagittis purus.
-                        </p>
-                    </figcaption>
-                </figure>
-                <figure class="friend">
-                    <img src="images/forty.png" alt="" />
-                    <figcaption class="friend__description">
-                        <h4 class="name">2</h4>
-                        <p class="text">
-                            Lorem 40 dolor sit amet, consectetur adipiscing elit. Cras ex
-                            mi, posuere in velit nec, auctor sagittis purus.
-                        </p>
-                    </figcaption>
-                </figure>
-                <figure class="friend">
-                    <img src="images/forty.png" alt="" />
-                    <figcaption class="friend__description">
-                        <h4 class="name">2</h4>
-                        <p class="text">
-                            Lorem 40 dolor sit amet, consectetur adipiscing elit. Cras ex
-                            mi, posuere in velit nec, auctor sagittis purus.
-                        </p>
-                    </figcaption>
-                </figure>
-            </div>
-            <div class="friendlistDesktop hidden">
-                <figure class="friend">
-                    <img src="images/forty.png" alt="" />
-                    <figcaption class="friend__description">
-                        <h4 class="name">1</h4>
-                        <p class="text">
-                            Lorem 40 dolor sit amet, consectetur adipiscing elit. Cras ex
-                            mi, posuere in velit nec, auctor sagittis purus.
-                        </p>
-                    </figcaption>
-                </figure>
-                <figure class="friend">
-                    <img src="images/forty.png" alt="" />
-                    <figcaption class="friend__description">
-                        <h4 class="name">1</h4>
-                        <p class="text">
-                            Lorem 40 dolor sit amet, consectetur adipiscing elit. Cras ex
-                            mi, posuere in velit nec, auctor sagittis purus.
-                        </p>
-                    </figcaption>
-                </figure>
-                <figure class="friend">
-                    <img src="images/forty.png" alt="" />
-                    <figcaption class="friend__description">
-                        <h4 class="name">1</h4>
-                        <p class="text">
-                            Lorem 40 dolor sit amet, consectetur adipiscing elit. Cras ex
-                            mi, posuere in velit nec, auctor sagittis purus.
-                        </p>
-                    </figcaption>
-                </figure>
-            </div>
+            <?php
+                    $t_i++;
+                endforeach;
+            endif;
+            ?>
+
         </div>
+
         <div class="menus menus--single">
-            <ul class="jobs submenu hidden">
-                <li class="jobs__link submenu__active">
-                    <p>Photo</p>
-                </li>
-                <li class="jobs__link">
-                    <p>Son</p>
-                </li>
-                <li class="jobs__link">
-                    <p>Designer<span class="break">graphique</span></p>
-                </li>
-            </ul>
+            <?php
+            // 2) PAS de 2e get_terms différent : on réutilise l'exact même ordre
+            $jobs_terms = $terms; // ← CHANGEMENT: on reprend les mêmes termes/ordre
+
+            if (!is_wp_error($jobs_terms) && !empty($jobs_terms)): ?>
+                <ul class="jobs submenu hidden">
+                    <?php $first = true; ?>
+                    <?php foreach ($jobs_terms as $term): ?>
+                        <li class="jobs__link <?= $first ? 'submenu__active' : '' ?>">
+                            <p><?= esc_html($term->name); ?></p>
+                        </li>
+                        <?php $first = false; ?>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
             <ul class="aboutMenu submenu">
                 <li class="aboutMenu__link submenu__active">
                     <p>AKA <span class="break">Studio</span></p>
@@ -499,17 +406,23 @@
                 </li>
             </ul>
         </div>
-        <ul class="jobsDesktop submenu hidden">
-            <li class="jobsDesktop__link submenu__active">
-                <p>Photo</p>
-            </li>
-            <li class="jobsDesktop__link">
-                <p>Son</p>
-            </li>
-            <li class="jobsDesktop__link">
-                <p>Designer graphique</p>
-            </li>
-        </ul>
+
+        <?php
+        // 2) PAS de 2e get_terms différent : on réutilise l'exact même ordre
+        $jobs_terms = $terms; // ← CHANGEMENT: on reprend les mêmes termes/ordre
+
+        if (!is_wp_error($jobs_terms) && !empty($jobs_terms)): ?>
+            <ul class="jobsDesktop submenu hidden">
+                <?php $first = true; ?>
+                <?php foreach ($jobs_terms as $term): ?>
+                    <li class="jobsDesktop__link <?= $first ? 'submenu__active' : '' ?>">
+                        <p><?= esc_html($term->name); ?></p>
+                    </li>
+                    <?php $first = false; ?>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
+
         <h2 class="slideTitle">ABOUT<span class="red">.</span></h2>
         <img
             src="<?= wp_get_attachment_image_url(get_field('about')['contact_kanji'], 'full') ?>"
@@ -523,7 +436,7 @@
 
     <section class="contact slide">
         <div class="content content--typeform">
-            <a href="" class="subtitle">Typeform<span class="red">.</span> </a>
+            <a href="<?= get_field('contact')['typeform-link'] ?>" target="_blank" class="subtitle">Typeform<span class="red">.</span> </a>
             <p class="text">
                 Remplis le formulaire Typeform pour décrire les caractéristiques de
                 ton projet et prends rendez-vous en visio ou en face-à-face pour que

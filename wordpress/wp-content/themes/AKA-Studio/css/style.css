@@ -1490,6 +1490,7 @@ img {
   }
   .about .content--second .content__wrapper .desktopOpinions .opinion img {
     max-height: calc(calc((100dvh - (11 * 20px)) / 12) * 4 + 100px);
+    cursor: pointer;
   }
   .about .content--second .content__wrapper .desktopOpinions .opinion img.big {
     min-width: calc((100dvw - 220px) / 12 * 3);
@@ -1561,6 +1562,9 @@ img {
   }
   .about .content--friends .friendlistDesktop .friend img {
     height: calc(calc((100dvh - (11 * 20px)) / 12) * 2 + 20px);
+  }
+  .about .content--friends .friendlistDesktop .friend a {
+    cursor: pointer;
   }
   .about .content--friends .friendlistDesktop .friend__description {
     display: flex;

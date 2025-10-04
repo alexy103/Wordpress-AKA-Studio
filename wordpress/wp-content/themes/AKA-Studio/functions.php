@@ -25,6 +25,7 @@ add_action('wp_enqueue_scripts', function () {
     wp_enqueue_script('theme-opinionslider', $theme_js_path . 'opinionSlider.js', [], null, true);
 });
 
+// CPT pour les projets
 add_action('init', function () {
     register_post_type('projet', [
         'labels' => [
@@ -45,7 +46,7 @@ add_action('init', function () {
             'singular_name' => 'Catégorie de projet',
         ],
         'public'            => true,
-        'hierarchical'      => false,       // false = comme des "tags", true = comme des "catégories"
+        'hierarchical'      => false,
         'show_ui'           => true,
         'show_admin_column' => true,
         'show_in_rest'      => true,
@@ -97,6 +98,111 @@ add_action('acf/init', function () {
             'param' => 'post_type',
             'operator' => '==',
             'value' => 'projet',
+        ]]],
+        'position' => 'normal',
+        'style' => 'default',
+        'active' => true,
+    ]);
+});
+
+// CPT pour les avis
+add_action('init', function () {
+    register_post_type('avis', [
+        'labels' => [
+            'name'          => 'Avis',
+            'singular_name' => 'Avis',
+        ],
+        'public'      => true,              // visible en front et admin
+        'menu_icon'   => 'dashicons-portfolio', // icône dans le menu admin
+        'supports'    => ['title', 'editor', 'thumbnail'], // champs activés
+    ]);
+});
+
+// Champs ACF pour le CPT "avis"
+add_action('acf/init', function () {
+    if (!function_exists('acf_add_local_field_group')) return;
+
+    acf_add_local_field_group([
+        'key' => 'group_avis_fields',
+        'title' => 'Avis - Image',
+        'fields' => [
+            [
+                'key' => 'field_avis_image',
+                'label' => 'Image',
+                'name' => 'image',
+                'type' => 'image',
+                'return_format' => 'id',
+                'preview_size'  => 'medium',
+            ]
+        ],
+        'location' => [[[
+            'param' => 'post_type',
+            'operator' => '==',
+            'value' => 'avis',
+        ]]],
+        'position' => 'normal',
+        'style' => 'default',
+        'active' => true,
+    ]);
+});
+
+// CPT pour les friends
+add_action('init', function () {
+    register_post_type('friends', [
+        'labels' => [
+            'name'          => 'Réseau',
+            'singular_name' => 'Réseau',
+        ],
+        'public'      => true,              // visible en front et admin
+        'menu_icon'   => 'dashicons-portfolio', // icône dans le menu admin
+        'supports'    => ['title', 'editor', 'thumbnail'], // champs activés
+    ]);
+});
+
+// Taxonomie pour classer les friends
+add_action('init', function () {
+    register_taxonomy('friends_cat', ['friends'], [
+        'labels' => [
+            'name'          => 'Type de réseau',
+            'singular_name' => 'Type de réseau',
+        ],
+        'public'            => true,
+        'hierarchical'      => false,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'show_in_rest'      => true,
+    ]);
+});
+
+// Champs ACF pour le CPT "friends"
+add_action('acf/init', function () {
+    if (!function_exists('acf_add_local_field_group')) return;
+
+    acf_add_local_field_group([
+        'key' => 'group_friends_fields',
+        'title' => 'Réseau - Infos',
+        'fields' => [
+            [
+                'key' => 'field_friends_image',
+                'label' => 'Image',
+                'name' => 'image',
+                'type' => 'image',
+                'return_format' => 'id',
+                'preview_size'  => 'medium',
+            ],
+            [
+                'key' => 'field_friends_link',
+                'label' => 'Lien',
+                'name' => 'link',
+                'type' => 'link',
+                'return_format' => 'array',
+            ],
+
+        ],
+        'location' => [[[
+            'param' => 'post_type',
+            'operator' => '==',
+            'value' => 'friends',
         ]]],
         'position' => 'normal',
         'style' => 'default',
