@@ -1686,6 +1686,8 @@ img {
   border: none;
   padding-left: 15px;
   font-size: 1.5rem;
+  width: 100%;
+  margin-bottom: calc(calc((100dvh - (5 * 20px)) / 6) * 0.095);
 }
 
 .contact .content--form form input {

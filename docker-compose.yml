@@ -40,6 +40,12 @@ services:
     ports:
       - "8081:80"    
 
+  mailpit:
+    image: axllent/mailpit:latest
+    restart: unless-stopped
+    ports:
+      - "8025:8025"  # UI web http://localhost:8025
+      - "1025:1025"  # SMTP local
+
 volumes:
   db_data:
-  wp_data:

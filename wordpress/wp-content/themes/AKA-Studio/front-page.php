@@ -157,7 +157,6 @@
         </div>
         <div class="content hidden content--second">
             <figure class="mainOpinion">
-                <!-- TODO: caché en mobile et visible en desktop -->
                 <img src="" alt="" class="mainOpinion__img" />
                 <figcaption class="mainOpinion__infos">
                     <h4 class="mainOpinion__title"></h4>
@@ -197,7 +196,7 @@
                                 </figcaption>
                                 <div class="opinionSlider slider">
                                     <i class="fa-solid fa-chevron-left"></i>
-                                    <img src="images/forty.png" alt="" />
+                                    <img src="<?= wp_get_attachment_image_url(get_field('image'), 'full') ?>" alt="">
                                     <i class="fa-solid fa-chevron-right"></i>
                                 </div>
                                 <h4 class="opinion__title"><?= esc_html(get_the_title()); ?></h4>
@@ -476,26 +475,68 @@
             </p>
         </div>
         <div class="content content--form hidden">
-            <form action="">
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="NOM*"
-                    autocomplete="on" />
-                <input
-                    type="text"
-                    name="mail"
-                    placeholder="ADRESSE MAIL*"
-                    autocomplete="on" />
-                <input
-                    type="text"
-                    name="subject"
-                    placeholder="SUJET*"
-                    autocomplete="on" />
-                <textarea name="message" placeholder="MESSAGE*"></textarea>
-                <input type="submit" value="ENVOYER" />
-            </form>
-            <!-- <p>Merci pour votre message !</p> -->
+
+            <?= apply_shortcodes('[contact-form-7 id="e2d8497" title="Formulaire de contact 1"]'); ?>
+
+
+            <script>
+                setTimeout(function() {
+                    document.querySelectorAll('.content--form form').forEach(function(form) {
+                        form.addEventListener('reset', function(e) {
+                            e.preventDefault();
+                            console.log(document.querySelectorAll('.content--form form'));
+                        });
+                    });
+                }, 500);
+            </script>
+            <style>
+                .content--form form {
+                    display: block;
+                }
+
+                .wpcf7 form.sent p {
+                    animation: fadeOut 0.5s forwards, formHide 0s 0.5s forwards;
+                    /* display: none; */
+                }
+
+                .wpcf7-form.resetting {
+                    /* animation: fadeOut 0.5s forwards, formHide 0s 0.5s forwards; */
+                }
+
+                .wpcf7-form.resetting .wpcf7-spinner {
+                    visibility: visible !important;
+                }
+
+                .wpcf7 form.sent .wpcf7-response-output {
+                    opacity: 0;
+                    animation: fadeIn 0.5s 0.5s forwards;
+                    font-size: 15px;
+                    padding: 80px 0 0;
+                    margin: 0;
+                }
+
+                .wpcf7 .wpcf7-response-output {
+                    border: none !important;
+                }
+
+                .wpcf7-spinner {
+                    transform: translateY(7px);
+                }
+
+                @media screen and (min-width: 1440px) {
+                    .wpcf7 form.sent .wpcf7-response-output {
+                        font-size: 20px;
+                        text-align: center;
+                    }
+                }
+
+                @keyframes formHide {
+                    to {
+                        display: none;
+                    }
+                }
+            </style>
+
         </div>
         <div class="contactMenu__wrapper">
             <h2 class="slideTitle">Contact<span class="red">.</span></h2>
